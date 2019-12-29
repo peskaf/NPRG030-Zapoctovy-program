@@ -71,7 +71,6 @@ def menu(choice): #menu hry, choice = cislo vyberu z menu
 ```
 
 Výsledek:
-
 ![Menu](pics/Menu.png)
 
 Pro přegenerování některého z levelu spusťte [Level_generator.py](Zapoctovy_program/Level_generator.py). Do konzole zadejte celé číslo od 1 do 5 podle čísla levelu, který se má přegenerovat. Zadání jiného čísla nebo znaku způsobí vytvoření nového textového souboru, který se ovšem v hlavní hře neprojeví.
