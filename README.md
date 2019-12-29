@@ -2,7 +2,7 @@
 
 Tento program v jazyce Python generuje bludiště, která následně umožní uživateli kompetitivní formou projít.
 
-Pomocí prvního programu [Level_generator.py](Zapoctovy_program/Level_generator.py) bylo pouze vygenerováno několik základních bludišť (levelů), které jsou uložené v adresáři [levels](Zapoctovy_program/levels) v jednotlivých souborech. Podstatná část tohoto programu byla také implementována do hlavního programu jako funkce, pomocí které se vygeneruje náhodné bludiště. S tímto programem jinak uživatel nijak neinteraguje. 
+Pomocí prvního programu [Level_generator.py](Zapoctovy_program/Level_generator.py) bylo vygenerováno několik základních bludišť (levelů), které jsou uložené v adresáři [levels](Zapoctovy_program/levels) v jednotlivých souborech. Podstatná část tohoto programu byla také implementována do hlavního programu jako funkce, pomocí které se vygeneruje náhodné bludiště. S tímto programem může uživatel interagovat, pokud chce některý z levelů přegenerovat. 
 
 Druhý program [main.py](Zapoctovy_program/main.py) je hra samotná, která umožní zahájit procházení předem vytvořených pěti levelů na čas. Zároveň si v hlavním programu může uživatel projít náhodně generované bludiště nebo si prohlédnout nejlepší časy z jednotlivých kol, popřípadě je resetovat. Tento program je interaktivní.
 
@@ -72,6 +72,25 @@ def menu(choice): #menu hry, choice = cislo vyberu z menu
 
 Výsledek:
 ![Menu](pics/Menu.png)
+
+Pro přegenerování některého z levelu spusťte [Level_generator.py](Zapoctovy_program/Level_generator.py). Do konzole zadejte celé číslo od 1 do 5 podle čísla levelu, který se má přegenerovat. Zadání jiného čísla nebo znaku způsobí vytvoření nového textového souboru, který se ovšem v hlavní hře neprojeví.
+
+Uložení nově vygenerovaného bludiště v kódu:
+```python
+def uloz_bludiste(num):
+    f = open(f"levels/level{num}.txt","wt")
+    for radek in bludiste:
+        for prvek in radek:    
+            f.write(f"{prvek}")
+        f.write("\n")
+    f.close()
+```
+
+Dotaz na číslo přegenerovaného bludiště:
+![Dotaz](pics/cons_gen.png)
+
+Výsledek uloženého bludiště v textovém souboru:
+![Uložené bludiště](pics/level_txt.png.png)
 
 
 ## Instalace a požadavky
