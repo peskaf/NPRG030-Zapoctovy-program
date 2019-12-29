@@ -94,6 +94,13 @@ Pro spuštění [main.py](Zapoctovy_program/main.py) je potřeba mít nainstalov
 
 ## Dokumentace
 
+### Použité knihovny
+Pro program jsem použil několik knihoven, bez kterých by funkčnost programu nebyla vůbec možná. Jedná se o:
+
+* **Pygame** - umožňuje snadnou tvorbu hry,
+* **Random** - díky knihovně Random jsou vybírány náhodné základy a náhodné směry při generování bludiště (popsáno níže),
+* **Os** - umožňuje ukončení hry.
+
 ### Algoritmus použitý pro generování bludiště
 Algoritmus, pomocí kterého se bludiště generuje, jsem zvolil tak, aby byl co nejpřehlednější a co nejlépe implementovatelný. Jedná se o algoritmus, který je popsaný v článku na webu [itnetwork.cz](https://www.itnetwork.cz/navrh/algoritmy/algoritmy-bludiste/algoritmus-tvorba-nahodneho-bludiste). Pro realizaci algoritmu budeme pořebovat reprezentovat 3 stavy políčka - nic = 0, základ = 1, zeď = 2. Na základě těchto hodnot pak vytvoříme základ pro tvorbu bludiště - okraje mají hodnotu 2, každé sudé políčko na sudém řádku (číslujeme od 0), kde není okraj, má hodnotu 1, ostatní políčka mají hodnotu 0.  
 Stručně nastíněný algoritmus:
@@ -178,4 +185,32 @@ def gen_maze(): #funkce generovani bludiste
     postav_bludiste()
     uloz_bludiste()
 ```
-Výsledkem tohoto algoritmu je v textovém souboru uložená posloupnost nul a dvojek, která je po 19 odřádkována (viz 2. obrázek v sekci [Použití](README.md#Použití)).
+Výsledkem tohoto algoritmu je v textovém souboru uložená posloupnost nul a dvojek bez mezer, která je po 21 číslicích odřádkována (viz 2. obrázek v sekci [Použití](README.md#Použití)).
+
+### Popis tříd a funkcí
+#### třída Player
+Při své **inicializaci** označí hráčovu polohu na hracím plánu zeleným čtvercem.
+```python
+def __init__(this): #hrac se objevi v levem hornim rohu bludiste
+        this.px = strana+kde_x
+        this.py = strana+kde_y
+        pygame.draw.rect(win, (78, 255, 0), (this.px,this.py,strana,strana))
+        pygame.display.update()
+```
+Obsahuje metodu **move(this,zmenax,zmenay)**, která kontroluje validitu tahů, případně jestli tah nevede na políčko, které je výherní.
+Paramtery **zmenax** a **zmenay** jsou ovlivňovány tím, jakou klávesu hráč stiskne. O nich více ve funkci **game_loop()**.
+Kontrola validity tahů má tu podobu, že pokud aktuální souřadnice + změna souřadnice daným směrem vede na souřadnici, kde je oranžová barva (zeď), tah neproběhne. Pokud vede na červenou barvu, hráč je v cíli a hra je ukončena. Pokud vede na černou barvu, tah je validní a pozici hráče můžeme překreslit.
+```python
+def move(this,zmenax,zmenay):
+        if win.get_at((this.px+zmenax, this.py+zmenay)) == (212,123,21) or win.get_at((this.px+zmenax+strana-1, this.py+zmenay)) == (212,123,21) or win.get_at((this.px+zmenax+strana-1, this.py+zmenay+strana-1)) == (212,123,21) or win.get_at((this.px+zmenax, this.py+zmenay+strana-1)) == (212,123,21):    #hranice
+            pass
+        elif win.get_at((this.px+zmenax, this.py+zmenay)) == (255,0,0) or win.get_at((this.px+zmenax+strana-1, this.py+zmenay)) == (255,0,0) or win.get_at((this.px+zmenax+strana-1, this.py+zmenay+strana-1)) == (255,0,0) or win.get_at((this.px+zmenax, this.py+zmenay+strana-1)) == (255,0,0):  #cil
+            global finished
+            finished = True
+        else:               #pokud je tah validni, prekresli hrace na dane souradnice
+            pygame.draw.rect(win, (0, 0, 0), (this.px,this.py,strana,strana))
+            this.px += zmenax
+            this.py += zmenay
+            pygame.draw.rect(win, (78, 255, 0), (this.px,this.py,strana,strana))
+            pygame.display.update()
+```
