@@ -377,7 +377,7 @@ def menu(choice): #menu hry, choice = cislo vyberu z menu
                         gen_maze() #viz "implementace algoritmu pro tvorbu bludiste v main.py"
                         level = 6 #oznaceni nahodneho levelu
                         sc = open(f"scores/level{level}_sc.txt", "wt")
-                        sc.write(f"90.00") #nastavi cas tak, aby byl kazdy dohrany lepsi (bludiste jsou jedinecna, nemaji PB)
+                        sc.write(f"90.00") #nastavi cas tak, aby byl kazdy dohrany lepsi
                         sc.close()
                         build("levels/random_level.txt") #postavi nahodne vygenerovane a ulozene bludiste
                         hrac = player()
