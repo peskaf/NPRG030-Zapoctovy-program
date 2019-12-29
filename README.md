@@ -89,8 +89,8 @@ def uloz_bludiste(num):
 Dotaz na číslo přegenerovaného bludiště:
 ![Dotaz](pics/cons_gen.png)
 
-Výsledek uloženého bludiště v textovém souboru:
-![Uložené bludiště](pics/level_txt.png.png)
+Výsledek uloženého bludiště v textovém souboru (pro zadané číslo 4):
+![Uložené bludiště](pics/level_txt.png)
 
 
 ## Instalace a požadavky
