@@ -189,13 +189,13 @@ Výsledkem tohoto algoritmu je v textovém souboru uložená posloupnost nul a d
 
 ### Popis tříd a funkcí a proměnných
 #### globální proměnné
-* strana - strana jednoho čtverečku (slouží pro vykreslování bludiště i reprezentaci hráče a cílu)
-* kde_y - první složka souřadnice prvního čtverečku při vykreslování, dále slouží i k označení polohy hráče
-* kde_x = druhá složka souřadnice prvního čtverečku při vykreslování, dále slouží i k označení polohy hráče
-* vel - rychlost, kterou se hráč pohybuje (o kolik se změní souřadnice hráče za jeden tah)
-* clock - reprezentace hodin v knihovně Pygame
-* win - obrazovka Pygame
-* level - číslo levelu, který si hráč vybral
+* ***strana*** - strana jednoho čtverečku (slouží pro vykreslování bludiště i reprezentaci hráče a cílu)
+* ***kde_y*** - první složka souřadnice prvního čtverečku při vykreslování, dále slouží i k označení polohy hráče
+* ***kde_x*** - druhá složka souřadnice prvního čtverečku při vykreslování, dále slouží i k označení polohy hráče
+* ***vel*** - rychlost, kterou se hráč pohybuje (o kolik se změní souřadnice hráče za jeden tah)
+* ***clock*** - reprezentace hodin v knihovně Pygame
+* ***win*** - obrazovka Pygame
+* ***level*** - číslo levelu, který si hráč vybral
 
 #### třída *Player()*
 Při své **inicializaci** označí hráčovu polohu na hracím plánu zeleným čtvercem.
