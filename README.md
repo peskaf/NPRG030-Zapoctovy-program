@@ -226,7 +226,7 @@ def move(this,zmenax,zmenay):
 ```
 
 #### funkce *build(co)*
-Tato funkce se stará o vykreslení aktuálně vybraného levelu na obrazovku. Parametr *co* je string v podobě názvu textového souboru, z kterého se bude bludiště načítat.
+Tato funkce se stará o vykreslení aktuálně vybraného levelu na obrazovku. Parametr *co* je string v podobě názvu textového souboru, ze kterého se bude bludiště načítat.
 
 ![Ukázka hry](pics/Game.png)
 
@@ -263,7 +263,7 @@ if finished == False: #pokud hra jeste neni dokoncena
 ```
 
 #### funkce *game_loop()*
-Tato funkce se stará o kontrolu toho, jakou klávesu hráč stiskl, případně zda se rozhodl program křížkem ukončit. Dále má také na starost oznámit funkci *timer()*, že hráč provedl první tah a tím spustit časovač. Zde se přistupuje ke třídě *Player()* a její metodě *move(this,zmenax,zmenay)*. Na základě stisnuté klávesy vyžaduje kontorlu, zda hráčova pozice mlže být daným směrem překreslena. Pokud hráč hru dokončil, vyskočí z cyklu.
+Tato funkce se stará o kontrolu toho, jakou klávesu hráč stiskl, případně zda se rozhodl program křížkem ukončit. Dále má také na starost oznámit funkci *timer()*, že hráč provedl první tah a tím spustit časovač. Zde se přistupuje ke třídě *Player()* a její metodě *move(this,zmenax,zmenay)*. Na základě stisnuté klávesy vyžaduje kontrolu, zda hráčova pozice může být daným směrem překreslena. Pokud hráč hru dokončil, vyskočí z cyklu.
 ```python
 def game_loop(): #cyklus tahů
     global hrac, start_ticks
@@ -391,7 +391,7 @@ def menu(choice): #menu hry, choice = cislo vyberu z menu
 
 ### Uživatelská část dokumentace
 #### Instalace
-Před spuštěním hry se ujistěte, že máte staženou knihovnu Pygame a že jste si zkopírovali celý adresář [Zapoctovy_program], ze kterého také hru [main.py](Zapoctovy_program/main.py) spouštíte.
+Před spuštěním hry se ujistěte, že máte staženou knihovnu Pygame a že jste si zkopírovali celý adresář [Zapoctovy_program](Zapoctovy_program), ze kterého také hru [main.py](Zapoctovy_program/main.py) spouštíte.
 
 #### Cíl hry
 Cílem hry je přemístit hráče (zelený čtvereček) validními tahy do cíle (červený čtvereček).
@@ -404,4 +404,4 @@ Pohyb v bludišti je **pouze pomocí šipek**, a to všemi směry. Pro plynulej�
 ### Závěr a subjektivní zhodnocení
 Vytvoření hry bylo o něco snazší, než jsem očekával. Zprvu jsem si myslel, že nejtěžší bude implementace algoritmu pro generování bludiště, to ovšem po přečtení výborněho článku z webu [itnetwork.cz](https://www.itnetwork.cz/navrh/algoritmy/algoritmy-bludiste/algoritmus-tvorba-nahodneho-bludiste) nebylo vůbec složité. Nejtěžší byla práce s knihovnou Pygame, s níž jsem neměl žádné zkušenosti.
 
-Jsem si vědom, že hra jako taková není nijak zábavná, ovšem jako cvičení naprogramování hry bylo toto téma ideální. Zábavnosti by určitě mohlo pomoci například větší bludiště nebo odstartování hry bez možnosti, aby si hráč bludiště prohlédl. Dále by se mohl hodnotit místo času například počet tahů atd. Pro větší bludiště by jistě musela být implementována možnost hru opustit (do menu, ne úplně - to implementováno je) nebo resetovat i v průběhu hraní. Nebylo by to nijak složité, ovšem pro takto malé bludiště a časový limit (90 sekund) mi to připadalo nadbytečné, jelikož to funkčnost programu nijak zvlášť neovlivňí.
+Jsem si vědom, že hra jako taková není nijak zábavná, ovšem jako cvičení naprogramování hry bylo toto téma ideální. Zábavnosti by určitě mohlo pomoci například větší bludiště nebo odstartování hry bez možnosti, aby si hráč bludiště prohlédl. Dále by se mohl hodnotit místo času například počet tahů atd. Pro větší bludiště by jistě musela být implementována možnost hru opustit (do menu, ne úplně - to implementováno je) nebo resetovat i v průběhu hraní. Nebylo by to nijak složité, ovšem pro takto malé bludiště a časový limit (90 sekund) mi to připadalo nadbytečné, jelikož to funkčnost programu nijak zvlášť neovlivní.
