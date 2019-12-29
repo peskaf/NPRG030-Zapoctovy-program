@@ -110,7 +110,7 @@ Stručně nastíněný algoritmus:
 3. celý algoritmus opakujeme, dokud počet základů není 0  
 
 ![Animace tvorby bludiště](pics/anim.gif)  
-Na animaci jsou zdi reprezentovány šedivými políčky, základy políčky s křížkem a volná políčka bílou barvou. (Obrázky, z kterých je vytvořená animace, jsou opět z webu [itnetwork.cz](https://www.itnetwork.cz/navrh/algoritmy/algoritmy-bludiste/algoritmus-tvorba-nahodneho-bludiste).
+Na animaci jsou zdi reprezentovány šedivými políčky, základy políčky s křížkem a volná políčka bílou barvou. Obrázky, ze kterých je vytvořená animace, jsou opět z webu [itnetwork.cz](https://www.itnetwork.cz/navrh/algoritmy/algoritmy-bludiste/algoritmus-tvorba-nahodneho-bludiste).
 
 Implementace algoritmu v programu [main.py](Zapoctovy_program/main.py):
 ```python
