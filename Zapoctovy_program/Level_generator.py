@@ -21,8 +21,8 @@ def tisk_seznam():
     for sez in bludiste:
         print(sez)
 
-def uloz_bludiste():
-    f = open("level1.txt","wt")
+def uloz_bludiste(num):
+    f = open(f"levels/level{num}.txt","wt")
     for radek in bludiste:
         for prvek in radek:    
             f.write(f"{prvek}")
@@ -80,6 +80,5 @@ def postav_bludiste():
         postav_zed()
             
 postav_bludiste()
-tisk_seznam()
-uloz_bludiste()
-  
+cislo_levelu = input("Cislo levelu ktery se pregeneruje (1-5):")
+uloz_bludiste(cislo_levelu)
