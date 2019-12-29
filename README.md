@@ -178,4 +178,4 @@ def gen_maze(): #funkce generovani bludiste
     postav_bludiste()
     uloz_bludiste()
 ```
-Výsledkem tohoto algoritmu je v textovém souboru uložená posloupnost nul a dvojek, která je po 19 odřádkována (viz 2. obrázek v sekci *použití*).
+Výsledkem tohoto algoritmu je v textovém souboru uložená posloupnost nul a dvojek, která je po 19 odřádkována (viz 2. obrázek v sekci [Použití](README.md#Použití)).
