@@ -94,4 +94,11 @@ Pro spuštění [main.py](Zapoctovy_program/main.py) je potřeba mít nainstalov
 
 ## Dokumentace
 
-Podstatná část dokumentace je tvořena dobře čitelným, místy okomentovaným kódem.
+### Algoritmus použitý pro generování bludiště
+Algoritmus, pomocí kterého se bludiště generuje, jsem zvolil tak, aby byl co nejpřehlednější a co nejlépe implementovatelný. Jedná se o algoritmus, který je popsaný v článku na webu ![itnetwork.cz](https://www.itnetwork.cz/navrh/algoritmy/algoritmy-bludiste/algoritmus-tvorba-nahodneho-bludiste). Pro realizaci algoritmu budeme pořebovat reprezentovat 3 stavy políčka - nic = 0, základ = 1, zeď = 2 a na základě těchto hodnot pak také základ pro tvorbu bludiště - okraje mají hodnotu 2, každé sudé políčko na sudém řádku (číslujeme od 0), kde není okraj, má hodnotu 1, ostatní políčka mají hodnotu 0.  
+Stručně nastíněný algoritmus:
+    * náhodně vybereme jeden ze základů (hodnota 1)
+    * vybereme náhodně směr a od vybraného základu daným směrem stavíme zeď, dokud nenarazíme na jinou zeď (hodnota 2)
+    * celý algoritmus opakujeme, dokud počet základů není 0  
+![Animace tvorby bludiště](pics/anim.gif)  
+
