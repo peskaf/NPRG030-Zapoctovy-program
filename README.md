@@ -188,7 +188,7 @@ def gen_maze(): #funkce generovani bludiste
 ```
 Výsledkem tohoto algoritmu je v textovém souboru uložená posloupnost nul a dvojek bez mezer, která je po 21 číslicích odřádkována (viz 2. obrázek v sekci [Použití](README.md#Použití)).
 
-### Popis tříd a funkcí a proměnných
+### Popis tříd, funkcí a proměnných
 #### globální proměnné
 * ***strana*** - strana jednoho čtverečku (slouží pro vykreslování bludiště i reprezentaci hráče a cílu)
 * ***kde_y*** - první složka souřadnice prvního čtverečku při vykreslování, dále slouží i k označení polohy hráče
