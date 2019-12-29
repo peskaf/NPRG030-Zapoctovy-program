@@ -86,11 +86,8 @@ def uloz_bludiste(num):
     f.close()
 ```
 
-Dotaz na číslo přegenerovaného bludiště:
-<img align="left" src="pics/cons_gen.png">
-
 Výsledek uloženého bludiště v textovém souboru (pro zadané číslo 4):
-<img align="left" src="pics/level_txt.png">
+![Uložené bludiště](pics/level_txt.png)
 
 
 ## Instalace a požadavky
