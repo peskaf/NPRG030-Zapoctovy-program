@@ -1,4 +1,11 @@
-import pygame, sys, time, os, random
+'''
+Generování a procházení bludiště
+Filip Peška, I. ročník
+zimní semestr 2019/20
+Programování 1 [NPRG030]
+'''
+
+import pygame, os, random
 from pygame.locals import *
 pygame.init()
 
