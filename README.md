@@ -86,7 +86,7 @@ def uloz_bludiste(num):
     f.close()
 ```
 
-Výsledek uloženého bludiště v textovém souboru (pro zadané číslo 4):
+Výsledek uloženého bludiště v textovém souboru (pro zadané číslo 4):  
 ![Uložené bludiště](pics/level_txt.png)
 
 
