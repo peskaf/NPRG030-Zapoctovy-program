@@ -187,8 +187,17 @@ def gen_maze(): #funkce generovani bludiste
 ```
 Výsledkem tohoto algoritmu je v textovém souboru uložená posloupnost nul a dvojek bez mezer, která je po 21 číslicích odřádkována (viz 2. obrázek v sekci [Použití](README.md#Použití)).
 
-### Popis tříd a funkcí
-#### třída Player
+### Popis tříd a funkcí a proměnných
+#### globální proměnné
+* strana - strana jednoho čtverečku (slouží pro vykreslování bludiště i reprezentaci hráče a cílu)
+* kde_y - první složka souřadnice prvního čtverečku při vykreslování, dále slouží i k označení polohy hráče
+* kde_x = druhá složka souřadnice prvního čtverečku při vykreslování, dále slouží i k označení polohy hráče
+* vel - rychlost, kterou se hráč pohybuje (o kolik se změní souřadnice hráče za jeden tah)
+* clock - reprezentace hodin v knihovně Pygame
+* win - obrazovka Pygame
+* level - číslo levelu, který si hráč vybral
+
+#### třída *Player()*
 Při své **inicializaci** označí hráčovu polohu na hracím plánu zeleným čtvercem.
 ```python
 def __init__(this): #hrac se objevi v levem hornim rohu bludiste
@@ -214,3 +223,181 @@ def move(this,zmenax,zmenay):
             pygame.draw.rect(win, (78, 255, 0), (this.px,this.py,strana,strana))
             pygame.display.update()
 ```
+
+#### funkce *build(co)*
+Tato funkce se stará o vykreslení aktuálně vybraného levelu na obrazovku. Parametr *co* je string v podobě názvu textového souboru, z kterého se bude bludiště načítat.
+
+![Ukázka hry](pics/Game.png)
+
+#### funkce *scores()*
+Funkce *scores()* vykreslí na obrazovku nejlepší výsledky hráče z jednotlivých levelů. Nejlepší výsledky jsou ukládány a načítány ze souboru. Funkce *scores()* má dvě podfunkce: *reset()* a *write_it()*. Funkce *reset()* resetuje nejlepší výsledky ve všech levelech (nastaví všechny nejlepší časy na 90.00). Funkce *write_it()* se stará o samotné vypsání.  
+![Nejlepší časy](pics/PBs.png)
+
+#### funkce *timer()*
+Jedná se o funkci, která měří hráčův čas a případně vyhodnocuje, za jak dlouho byla hra dohrána. Obsahuje funkci *napis(PB)*, která v případě, že parametr *PB* je *True* vypíše, jakého nejlepšího času bylo dosaženo. *PB* je *False* v případě, že čas byl pomalejší, než nejlepší čas v tomto levelu ze souboru a nebo v případě, že uplynulo 90 sekund a hráč stále hru nedokončil.
+
+Dále v případě, že hra nebyla dokončena, počítá čas a vykresluje ho na obrazovku. V případě, že hráč hru dohrál, zkontorluje, zda byl lepší, než doposud nejlepší čas. Čas případně uloží a zavolá svou vlastní funkci *napis(PB)* s příslušnou hodnotou paramteru.
+```python
+if finished == False: #pokud hra jeste neni dokoncena
+        time = (pygame.time.get_ticks()-start_ticks)/1000 #spocitej, kolik casu uplynulo od prvniho tahu
+        font_timer = pygame.font.Font("font/built_titling_bd.otf", 35)
+        text_timer = font_timer.render(f"{time}",True,(255,255,255)) #jaky je aktualni cas
+        if time>90: #pokud hrac hru nestihl dohrat za 90 sekund
+            napis(False)  #vypise napis o nesplneni ukolu
+        else:
+            win.fill((0,0,0),(575,70,90,40)) #smaze predchozi cas, ktery byl vypsan
+            win.blit(text_timer, (575,70)) #vypise novy cas
+        pygame.display.update()
+    else: #hra je dokoncena
+        sc = open(f"scores/level{level}_sc.txt", "rt")
+        prev_time = float(sc.readline()) #nacti predchozi nejlepsi cas ze souboru
+        sc.close()
+        if time<prev_time: #pokud je novy cas lepsi
+            sc = open(f"scores/level{level}_sc.txt", "wt")
+            sc.write(f"{time}") #uloz ten
+            sc.close()
+            napis(True) #vypis, ze hrac ma novy PB a jaky
+        else:
+            napis(False) #pokud je novy cas horsi, vypis, ze neni novy PB
+```
+
+#### funkce *game_loop()*
+Tato funkce se stará o kontrolu toho, jakou klávesu hráč stiskl, případně zda se rozhodl program křížkem ukončit. Dále má také na starost oznámit funkci *timer()*, že hráč provedl první tah a tím spustit časovač. Zde se přistupuje ke třídě *Player()* a její metodě *move(this,zmenax,zmenay)*. Na základě stisnuté klávesy vyžaduje kontorlu, zda hráčova pozice mlže být daným směrem překreslena. Pokud hráč hru dokončil, vyskočí z cyklu.
+```python
+def game_loop(): #cyklus tahů
+    global hrac, start_ticks
+    start = False #kontroluje, jestli hrac provedl prvni tah
+    while True:
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                os._exit(1)
+                
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_LEFT]: #vlevo
+            if start == False: #pokud se jedna o prvni tah, spust hodiny
+                start_ticks = pygame.time.get_ticks()
+                start = True
+            hrac.move(-vel,0) #pohyb hrace po souradnicich
+        if keys[pygame.K_RIGHT]: #vpravo
+            if start == False:
+                start_ticks = pygame.time.get_ticks()
+                start = True
+            hrac.move(vel,0)
+        if keys[pygame.K_UP]: #nahoru
+            if start == False:
+                start_ticks = pygame.time.get_ticks()
+                start = True
+            hrac.move(0,-vel)
+        if keys[pygame.K_DOWN]: #dolu
+            if start == False:
+                start_ticks = pygame.time.get_ticks()
+                start = True
+            hrac.move(0,vel)
+        if start == True:
+            timer() #pokud uz se zaclo, vypisuj cas
+        if finished == True:
+            break #pokud je hra dohrana, vyskoc z cyklu kontroly tahu
+        clock.tick(19)  #FPS
+  ```
+  
+#### funkce *submenu(choice)*
+Jedná se o vykreslení podmenu hry, ve kterém si hráč vybírá, jaký level chce hrát. Parametr *choice* udává pomocí hodnoty jedna až pět číslo levelu, který se zbarví jako vybraný a poté spustí, nebo hodnotou 6 skutečnost, že se chce uživatel vrátit do hlavního menu. 
+  
+  ```python 
+  
+  def submenu(choice): #choice = ktera polozka menu bude vybrana (zabarvena jinak)
+    global hrac, level, finished
+    finished = False #pokud jsi v podmenu, nastav, ze hra, kterou jako dalsi spustime, je jeste nedohrana
+    ...
+    
+    while True:
+        ...
+        for event in pygame.event.get():
+            ...
+            if event.type == pygame.KEYDOWN: #je nutne klavesu opakovane mackat, drzeni klavesy menu neposouva dal
+                if event.key == pygame.K_DOWN:
+                    if choice == 6: #pokud je vybrana posledni polozka a chci opet dolu, jdi na prvni volbu
+                        choice = 1
+                        submenu(choice)
+                    else:
+                        choice += 1
+                        submenu(choice)
+                if event.key == pygame.K_UP:
+                    if choice == 1:
+                        choice = 6
+                        submenu(choice)
+                    else:
+                        choice -= 1
+                        submenu(choice)
+                if event.key == pygame.K_RETURN: #K_RETURN = enter
+                    if choice == 1:     #spust level 1
+                        level = 1
+                        build(f"levels/level{level}.txt")
+                        hrac = player()
+                        game_loop()
+                    elif choice == 2:   #level 2
+                        level = 2
+                        build(f"levels/level{level}.txt")
+                        hrac = player()
+                        game_loop()
+
+                    elif choice == 3:   #level 3
+                        level = 3
+                        build(f"levels/level{level}.txt")
+                        hrac = player()
+                        game_loop()
+                    elif choice == 4:   #level 4
+                        level = 4
+                        build(f"levels/level{level}.txt")
+                        hrac = player()
+                        game_loop()
+                    elif choice == 5:   #level 5
+                        level = 5
+                        build(f"levels/level{level}.txt")
+                        hrac = player()
+                        game_loop()
+                    else:               #back = zpet do menu
+                        menu(1)
+```  
+![Podmenu](pics/Submenu.png)  
+
+#### funkce *menu(choice)*
+Jedná se o vykreslení menu hry, ve kterém si hráč vybírá, zda chce hrát hru podle levelů, náhodnou hru, zobrazit nejlepší časy a nebo hru opustit. Parametr *choice* má charakter integeru a značí číslo položky v menu, kterou má uživatel aktuálně zvýrazněnou a která se při stisknutí enteru spustí.
+
+```python
+def menu(choice): #menu hry, choice = cislo vyberu z menu
+    global hrac, level
+    ...
+                if event.key == pygame.K_RETURN:
+                    if choice == 1:     #play normal
+                        submenu(1) #nutnost vyberu levelu z podmenu
+                    elif choice == 2:   #gen+play random
+                        gen_maze() #viz "implementace algoritmu pro tvorbu bludiste v main.py"
+                        level = 6 #oznaceni nahodneho levelu
+                        sc = open(f"scores/level{level}_sc.txt", "wt")
+                        sc.write(f"90.00") #nastavi cas tak, aby byl kazdy dohrany lepsi (bludiste jsou jedinecna, nemaji PB)
+                        sc.close()
+                        build("levels/random_level.txt") #postavi nahodne vygenerovane a ulozene bludiste
+                        hrac = player()
+                        game_loop()
+                    elif choice == 3:   #scores
+                        scores() #zobrazi jednotliva PBs
+                    else:               #exit
+                        pygame.quit()
+                        os._exit(1) #opusti aplikaci
+``` 
+
+### Uživatelská část dokumentace
+#### Cíl hry
+Cílem hry je přemístit hráče (zelený čtvereček) validními tahy do cíle (červený čtvereček).
+
+#### Ovládání
+Pohyb v menu je pomocí šipek *nahoru* a *dolů*. Výběr položky se provádí stisknutím klávesy *enter*.  
+V položce menu *"Personal bests"* se stisknutím klávesy *R* resetují nejlepší časy.  
+Pohyb v bludišti je **pouze pomocí šipek**, a to všemi směry. Pro plynulejší pohyb doporučuji např. při pohybu směrem dolů a nutnosti zabočení vpravo držet zároveň jak šipku *dolů*, tak šipku *vpravo*, hráč se o bludiště "nezasekne".
+
+### Závěr a subjektivní zhodnocení
+Vytvoření hry bylo o něco snazší, než jsem očekával. Zprvu jsem si myslel, že nejtěžší bude implementace algoritmu pro generování bludiště, to ovšem po přečtení výborněho článku z webu [itnetwork.cz](https://www.itnetwork.cz/navrh/algoritmy/algoritmy-bludiste/algoritmus-tvorba-nahodneho-bludiste) nebylo vůbec složité. Nejtěžší byla práce s knihovnou Pygame, s níž jsem neměl žádné zkušenosti.
+
+Jsem si vědom, že hra jako taková není nijak zábavná, ovšem jako cvičení naprogramování hry bylo toto téma ideální. Zábavnosti by určitě mohlo pomoci například větší bludiště nebo odstartování hry bez možnosti, aby si hráč bludiště prohlédl. Dále by se mohl hodnotit místo času například počet tahů atd. Pro větší bludiště by jistě musela být implementována možnost hru opustit (do menu, ne úplně - to implementováno je) nebo resetovat i v průběhu hraní. Nebylo by to nijak složité, ovšem pro takto malé bludiště a časový limit (90 sekund) mi to připadalo nadbytečné, jelikož to funkčnost programu nijak zvlášť neovlivňí.
