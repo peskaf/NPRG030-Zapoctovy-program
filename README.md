@@ -72,7 +72,7 @@ def menu(choice): #menu hry, choice = cislo vyberu z menu
 ```
 
 Výsledek:
-![Menu](pics/Menu.txt)
+![Menu](pics/Menu.png)
 
 Je hezké mít hned na začátku různé příklady vstupů a výstupů, obrázky, a podobně.
 
