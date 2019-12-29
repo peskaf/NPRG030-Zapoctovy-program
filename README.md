@@ -190,7 +190,7 @@ Výsledkem tohoto algoritmu je v textovém souboru uložená posloupnost nul a d
 
 ### Popis tříd, funkcí a proměnných
 #### globální proměnné
-* ***strana*** - strana jednoho čtverečku (slouží pro vykreslování bludiště i reprezentaci hráče a cílu)
+* ***strana*** - strana jednoho čtverečku (slouží pro vykreslování bludiště i reprezentaci hráče a cíle)
 * ***kde_y*** - první složka souřadnice prvního čtverečku při vykreslování, dále slouží i k označení polohy hráče
 * ***kde_x*** - druhá složka souřadnice prvního čtverečku při vykreslování, dále slouží i k označení polohy hráče
 * ***vel*** - rychlost, kterou se hráč pohybuje (o kolik se změní souřadnice hráče za jeden tah)
@@ -208,7 +208,7 @@ def __init__(this): #hrac se objevi v levem hornim rohu bludiste
         pygame.display.update()
 ```
 Obsahuje metodu **move(this,zmenax,zmenay)**, která kontroluje validitu tahů, případně jestli tah nevede na políčko, které je výherní.
-Paramtery **zmenax** a **zmenay** jsou ovlivňovány tím, jakou klávesu hráč stiskne. O nich více ve funkci **game_loop()**.
+Parametry **zmenax** a **zmenay** jsou ovlivňovány tím, jakou klávesu hráč stiskne. O nich více ve funkci **game_loop()**.
 Kontrola validity tahů má tu podobu, že pokud aktuální souřadnice + změna souřadnice daným směrem vede na souřadnici, kde je oranžová barva (zeď), tah neproběhne. Pokud vede na červenou barvu, hráč je v cíli a hra je ukončena. Pokud vede na černou barvu, tah je validní a pozici hráče můžeme překreslit.
 ```python
 def move(this,zmenax,zmenay):
@@ -237,7 +237,7 @@ Funkce *scores()* vykreslí na obrazovku nejlepší výsledky hráče z jednotli
 #### funkce *timer()*
 Jedná se o funkci, která měří hráčův čas a případně vyhodnocuje, za jak dlouho byla hra dohrána. Obsahuje funkci *napis(PB)*, která v případě, že parametr *PB* je *True* vypíše, jakého nejlepšího času bylo dosaženo. *PB* je *False* v případě, že čas byl pomalejší, než nejlepší čas v tomto levelu ze souboru a nebo v případě, že uplynulo 90 sekund a hráč stále hru nedokončil.
 
-Dále v případě, že hra nebyla dokončena, počítá čas a vykresluje ho na obrazovku. V případě, že hráč hru dohrál, zkontorluje, zda byl lepší, než doposud nejlepší čas. Čas případně uloží a zavolá svou vlastní funkci *napis(PB)* s příslušnou hodnotou paramteru.
+Dále v případě, že hra nebyla dokončena, počítá čas a vykresluje ho na obrazovku. V případě, že hráč hru dohrál, zkontroluje, zda byl lepší, než doposud nejlepší čas. Čas případně uloží a zavolá svou vlastní funkci *napis(PB)* s příslušnou hodnotou parametru.
 ```python
 if finished == False: #pokud hra jeste neni dokoncena
         time = (pygame.time.get_ticks()-start_ticks)/1000 #spocitej, kolik casu uplynulo od prvniho tahu
@@ -263,7 +263,7 @@ if finished == False: #pokud hra jeste neni dokoncena
 ```
 
 #### funkce *game_loop()*
-Tato funkce se stará o kontrolu toho, jakou klávesu hráč stiskl, případně zda se rozhodl program křížkem ukončit. Dále má také na starost oznámit funkci *timer()*, že hráč provedl první tah a tím spustit časovač. Zde se přistupuje ke třídě *Player()* a její metodě *move(this,zmenax,zmenay)*. Na základě stisnuté klávesy vyžaduje kontrolu, zda hráčova pozice může být daným směrem překreslena. Pokud hráč hru dokončil, vyskočí z cyklu.
+Tato funkce se stará o kontrolu toho, jakou klávesu hráč stiskl, případně zda se rozhodl program křížkem ukončit. Dále má také na starost oznámit funkci *timer()*, že hráč provedl první tah a tím spustit časovač. Zde se přistupuje ke třídě *Player()* a její metodě *move(this,zmenax,zmenay)*. Na základě stisknuté klávesy vyžaduje kontrolu, zda hráčova pozice může být daným směrem překreslena. Pokud hráč hru dokončil, vyskočí z cyklu.
 ```python
 def game_loop(): #cyklus tahů
     global hrac, start_ticks
@@ -364,7 +364,7 @@ Jedná se o vykreslení podmenu hry, ve kterém si hráč vybírá, jaký level 
 ![Podmenu](pics/Submenu.png)  
 
 #### funkce *menu(choice)*
-Jedná se o vykreslení menu hry, ve kterém si hráč vybírá, zda chce hrát hru podle levelů, náhodnou hru, zobrazit nejlepší časy a nebo hru opustit. Parametr *choice* má charakter integeru a značí číslo položky v menu, kterou má uživatel aktuálně zvýrazněnou a která se při stisknutí enteru spustí.
+Jedná se o vykreslení menu hry, ve kterém si hráč vybírá, zda chce hrát hru podle levelů, náhodnou hru, zobrazit nejlepší časy, a nebo hru opustit. Parametr *choice* má charakter integeru a značí číslo položky v menu, kterou má uživatel aktuálně zvýrazněnou a která se při stisknutí enteru spustí.
 
 ```python
 def menu(choice): #menu hry, choice = cislo vyberu z menu
@@ -402,6 +402,6 @@ V položce menu *"Personal bests"* se stisknutím klávesy *R* resetují nejlep�
 Pohyb v bludišti je **pouze pomocí šipek**, a to všemi směry. Pro plynulejší pohyb doporučuji např. při pohybu směrem dolů a nutnosti zabočení vpravo držet zároveň jak šipku *dolů*, tak šipku *vpravo*, hráč se o bludiště "nezasekne".
 
 ### Závěr a subjektivní zhodnocení
-Vytvoření hry bylo o něco snazší, než jsem očekával. Zprvu jsem si myslel, že nejtěžší bude implementace algoritmu pro generování bludiště, to ovšem po přečtení výborněho článku z webu [itnetwork.cz](https://www.itnetwork.cz/navrh/algoritmy/algoritmy-bludiste/algoritmus-tvorba-nahodneho-bludiste) nebylo vůbec složité. Nejtěžší byla práce s knihovnou Pygame, s níž jsem neměl žádné zkušenosti.
+Vytvoření hry bylo o něco snazší, než jsem očekával. Zprvu jsem si myslel, že nejtěžší bude implementace algoritmu pro generování bludiště, to ovšem po přečtení výborného článku z webu [itnetwork.cz](https://www.itnetwork.cz/navrh/algoritmy/algoritmy-bludiste/algoritmus-tvorba-nahodneho-bludiste) nebylo vůbec složité. Nejtěžší byla práce s knihovnou Pygame, s níž jsem neměl žádné zkušenosti.
 
 Jsem si vědom, že hra jako taková není nijak zábavná, ovšem jako cvičení naprogramování hry bylo toto téma ideální. Zábavnosti by určitě mohlo pomoci například větší bludiště nebo odstartování hry bez možnosti, aby si hráč bludiště prohlédl. Dále by se mohl hodnotit místo času například počet tahů atd. Pro větší bludiště by jistě musela být implementována možnost hru opustit (do menu, ne úplně - to implementováno je) nebo resetovat i v průběhu hraní. Nebylo by to nijak složité, ovšem pro takto malé bludiště a časový limit (90 sekund) mi to připadalo nadbytečné, jelikož to funkčnost programu nijak zvlášť neovlivní.
