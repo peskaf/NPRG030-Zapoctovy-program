@@ -100,6 +100,8 @@ Stručně nastíněný algoritmus:
 1. náhodně vybereme jeden ze základů (hodnota 1)
 2. vybereme náhodně směr a od vybraného základu daným směrem stavíme zeď, dokud nenarazíme na jinou zeď (hodnota 2)
 3. celý algoritmus opakujeme, dokud počet základů není 0  
-![Animace tvorby bludiště](pics/anim.gif) 
+
+![Animace tvorby bludiště](pics/anim.gif)  
+
 Na animaci jsou zdi reprezentovány šedivými políčky, základy políčky s křížkem a volná políčka bílou barvou.
 
