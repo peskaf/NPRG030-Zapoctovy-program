@@ -12,10 +12,9 @@ Na hru jako takovou je použita knihovna pygame.
 
 ## Použití
 
-Pro spuštění hlavního programu spusťte [main.py](Zapoctovy_program/main.py).
+Pro spuštění hlavního programu spusťte [main.py](Zapoctovy_program/main.py). Jako první se zobrazí hlavní menu.
 
-
-Hlavní menu v kódu:
+Vykreslení hlavního menu v kódu:
 
 ```python
 def menu(choice): #menu hry, choice = cislo vyberu z menu
@@ -74,11 +73,6 @@ def menu(choice): #menu hry, choice = cislo vyberu z menu
 Výsledek:
 ![Menu](pics/Menu.png)
 
-Je hezké mít hned na začátku různé příklady vstupů a výstupů, obrázky, a podobně.
-
-Inspirujte se u jiných knihoven, například:
-- [tqdm](https://github.com/tqdm/tqdm) (progress bar, doporučuji využívat :)),
-- [transformers](https://github.com/huggingface/transformers) (jazyková záležitost).
 
 ## Instalace a požadavky
 Pro spuštění [main.py](Zapoctovy_program/main.py) je potřeba mít nainstalovanou knihovnu Pygame verze 1.9.6, pro spuštění [Level_generator.py](Zapoctovy_program/Level_generator.py) není třeba žádná nainstalovaná knihovna.
