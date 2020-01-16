@@ -2,9 +2,9 @@
 
 Tento program v jazyce Python generuje bludiště, která následně umožní uživateli kompetitivní formou projít.
 
-Pomocí prvního programu [Level_generator.py](Zapoctovy_program/Level_generator.py) bylo vygenerováno několik základních bludišť (levelů), které jsou uložené v adresáři [levels](Zapoctovy_program/levels) v jednotlivých souborech. Podstatná část tohoto programu byla také implementována do hlavního programu jako funkce, pomocí které se vygeneruje náhodné bludiště. S tímto programem může uživatel interagovat, pokud chce některý z levelů přegenerovat. 
+Pomocí prvního programu [Level_generator.py](Zapoctovy_program/Level_generator.py) bylo vygenerováno několik základních bludišť (levelů), které jsou uložené v adresáři [levels](Zapoctovy_program/levels) v jednotlivých souborech. [Level_generator.py](Zapoctovy_program/Level_generator.py) přistupuje k funkcím, které jsou definované v [utils.py](Zapoctovy_program/utils.py). Pomocí nich probíhá veškeré generování a ukládání, [Level_generator.py](Zapoctovy_program/Level_generator.py) slouží pouze pro obsluhu. S programem [Level_generator.py](Zapoctovy_program/Level_generator.py) může uživatel interagovat, pokud chce některý z levelů přegenerovat. 
 
-Druhý program [main.py](Zapoctovy_program/main.py) je hra samotná, která umožní zahájit procházení předem vytvořených pěti levelů na čas. Zároveň si v hlavním programu může uživatel projít náhodně generované bludiště nebo si prohlédnout nejlepší časy z jednotlivých kol, popřípadě je resetovat. Tento program je interaktivní.
+Druhý program [main.py](Zapoctovy_program/main.py) je hra samotná, která umožní zahájit procházení předem vytvořených pěti levelů na čas. Zároveň si v hlavním programu může uživatel projít náhodně generované bludiště nebo si prohlédnout nejlepší časy z jednotlivých kol, popřípadě je resetovat. Tento program je interaktivní. Hlavní program [main.py](Zapoctovy_program/main.py) importuje mimo jiné funkce z [utils.py](Zapoctovy_program/utils.py), a to právě ke generování náhodného bludiště.
 
 S hlavním programem uživatel komunikuje pomocí klávesnice. Jedná se především o pohyb v rámci menu a poté pohyb bludištěm. 
 
@@ -77,7 +77,7 @@ Pro přegenerování některého z levelu spusťte [Level_generator.py](Zapoctov
 
 Uložení nově vygenerovaného bludiště v kódu:
 ```python
-def uloz_bludiste(num):
+def uloz_bludiste_num(num,bludiste):
     f = open(f"levels/level{num}.txt","wt")
     for radek in bludiste:
         for prvek in radek:    
@@ -90,7 +90,7 @@ Výsledek uloženého bludiště v textovém souboru (pro zadané číslo 4):
 ![Uložené bludiště](pics/level_txt.png)
 
 ## Instalace a požadavky
-Pro spuštění [main.py](Zapoctovy_program/main.py) je potřeba mít nainstalovanou knihovnu Pygame verze 1.9.6, pro spuštění [Level_generator.py](Zapoctovy_program/Level_generator.py) není třeba žádná nainstalovaná knihovna.
+Pro spuštění [main.py](Zapoctovy_program/main.py) je potřeba mít nainstalovanou knihovnu Pygame verze 1.9.6, pro spuštění [Level_generator.py](Zapoctovy_program/Level_generator.py) není třeba žádná nainstalovaná knihovna. Pro oba programy je naprosotu nutností přítomnot programu [utils.py](Zapoctovy_program/utils.py), ze kterého si oba programy importují funkce.
 
 ## Dokumentace
 
@@ -115,76 +115,79 @@ Na animaci jsou zdi reprezentovány šedivými políčky, základy políčky s k
 Implementace algoritmu v programu [main.py](Zapoctovy_program/main.py):
 ```python
 def gen_maze(): #funkce generovani bludiste
+    ... #vynechán řádek, který není pro tento algoritmus relevantní
     bludiste = []
-
-    def template(): #0 = zed, 1 = zaklad, 2 = volno; vytvori planek pro tvorbu bludiste
-        bludiste.append([0 for _ in range(21)])
+    utils.postav_bludiste(bludiste)
+    utils.uloz_bludiste_random(bludiste)
+    ... #vynechán řádek, který není pro tento algoritmus relevantní
+```
+Funkce importované ze souboru [utils.py](Zapoctovy_program/utils.py), využívané v implementaci generujícího algoritmu:
+```python
+import random
+def template(bludiste): #0 = zed, 1 = zaklad, 2 = volno #ohranici hraci pole, rozmisti zaklady
+    bludiste.append([0 for _ in range(21)])
+    bludiste.append([0]+[2 for _ in range(19)]+[0])
+    for _ in range(9):
+        bludiste.append([0,2]+[ x for _ in range(9) for x in (1,2)]+[0])
         bludiste.append([0]+[2 for _ in range(19)]+[0])
-        for _ in range(9):
-            bludiste.append([0,2]+[ x for _ in range(9) for x in (1,2)]+[0])
-            bludiste.append([0]+[2 for _ in range(19)]+[0])
-        bludiste.append([0 for _ in range(21)])
-
-    def uloz_bludiste():
-        f = open("levels/random_level.txt","wt")
-        for radek in bludiste:
-            for prvek in radek:    
-                f.write(f"{prvek}")
-            f.write("\n")
-        f.close()
+    bludiste.append([0 for _ in range(21)])
+...
+def uloz_bludiste_random(bludiste): #ulozi bludiste do souboru
+    f = open(f"levels/random_level.txt","wt")
+    for radek in bludiste:
+        for prvek in radek:    
+            f.write(f"{prvek}")
+        f.write("\n")
+    f.close()
      
-    def kolik_zakladu(): #spocita, kolik je v planku zbylych zakladu
-        pocet_zakladu = 0
-        for radek in bludiste:
-            for prvek in radek:
-                if prvek == 1:
-                    pocet_zakladu +=1
-                else: pass
-        return pocet_zakladu
+def kolik_zakladu(bludiste): #spocita pocet zbylych zakladu v bludisti
+    pocet_zakladu = 0
+    for radek in bludiste:
+        for prvek in radek:
+            if prvek == 1:
+                pocet_zakladu +=1
+            else: pass
+    return pocet_zakladu
 
-    def vyber_nahodne_zaklad(): #nahodne vybere jeden ze zakladu
-        poc_zakladu = 0
-        poc_radku = 0
-        index = random.randint(1,kolik_zakladu())
-        #print(index)
-        for radek in bludiste:
-            poc_prvku = 0
-            while poc_prvku !=21:
-                if radek[poc_prvku] == 1:
-                    poc_zakladu += 1
-                    if poc_zakladu == index:
-                        return (poc_radku, poc_prvku)
-                poc_prvku += 1
-            poc_radku += 1
+def vyber_nahodne_zaklad(bludiste): #nahodne vybere zaklad
+    poc_zakladu = 0
+    poc_radku = 0
+    index = random.randint(1,kolik_zakladu(bludiste))
+    for radek in bludiste:
+        poc_prvku = 0
+        while poc_prvku !=21:
+            if radek[poc_prvku] == 1:
+                poc_zakladu += 1
+                if poc_zakladu == index:
+                    return (poc_radku, poc_prvku)
+            poc_prvku += 1
+        poc_radku += 1
         
-    def postav_zed(): #z nahodne vybraneho zakladu stavi nahodnym smerem zed, dokud nenarazi na jinou zed
-        souradnice = vyber_nahodne_zaklad()
-        y, x = souradnice[0], souradnice[1]
-        volba = random.randint(1,4) #1 = nahoru, 2 = dolu, 3 = vlevo, 4 = vpravo
-        if volba == 1: #nahoru
-            while bludiste[y][x] != 0:
-                bludiste[y][x] = 0
-                y -= 1
-        elif volba == 2: #dolu
-            while bludiste[y][x] != 0:
-                bludiste[y][x] = 0
-                y += 1
-        elif volba == 3: #vlevo
-            while bludiste[y][x] != 0:
-                bludiste[y][x] = 0
-                x -= 1
-        else:            #vpravo
-            while bludiste[y][x] != 0:
-                bludiste[y][x] = 0
-                x += 1
+def postav_zed(bludiste): #stavi zed, dokud nenarazi na zed
+    souradnice = vyber_nahodne_zaklad(bludiste)
+    y, x = souradnice[0], souradnice[1]
+    volba = random.randint(1,4) #1 = nahoru, 2 = dolu, 3 = vlevo, 4 = vpravo
+    if volba == 1: #nahoru
+        while bludiste[y][x] != 0:
+            bludiste[y][x] = 0
+            y -= 1
+    elif volba == 2: #dolu
+        while bludiste[y][x] != 0:
+            bludiste[y][x] = 0
+            y += 1
+    elif volba == 3: #vlevo
+        while bludiste[y][x] != 0:
+            bludiste[y][x] = 0
+            x -= 1
+    else:            #vpravo
+        while bludiste[y][x] != 0:
+            bludiste[y][x] = 0
+            x += 1
 
-    def postav_bludiste(): #stavi zdi, dokud v planku jsou nejake zaklady
-        template()
-        while kolik_zakladu() != 0:
-            postav_zed()
-            
-    postav_bludiste()
-    uloz_bludiste()
+def postav_bludiste(bludiste): #postavi cele bludiste - obsluhuje ostatni funkce
+    template(bludiste)
+    while kolik_zakladu(bludiste) != 0:
+        postav_zed(bludiste)
 ```
 Výsledkem tohoto algoritmu je v textovém souboru uložená posloupnost nul a dvojek bez mezer, která je po 21 číslicích odřádkována (viz 2. obrázek v sekci [Použití](README.md#Použití)).
 
@@ -391,7 +394,7 @@ def menu(choice): #menu hry, choice = cislo vyberu z menu
 
 ### Uživatelská část dokumentace
 #### Instalace
-Před spuštěním hry se ujistěte, že máte staženou knihovnu Pygame a že jste si zkopírovali celý adresář [Zapoctovy_program](Zapoctovy_program), ze kterého také hru [main.py](Zapoctovy_program/main.py) spouštíte.
+Před spuštěním hry se ujistěte, že máte staženou knihovnu Pygame a že jste si zkopírovali celý adresář [Zapoctovy_program](Zapoctovy_program), ze kterého také hru [main.py](Zapoctovy_program/main.py) spouštíte. Důležité upozornění: adresáře s levely a jednotlivými skóre nejsou určeny pro přímou interakci s uživatelem!
 
 #### Cíl hry
 Cílem hry je přemístit hráče (zelený čtvereček) validními tahy do cíle (červený čtvereček).
