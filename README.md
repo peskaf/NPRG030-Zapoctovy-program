@@ -394,7 +394,7 @@ def menu(choice): #menu hry, choice = cislo vyberu z menu
 
 ### Uživatelská část dokumentace
 #### Instalace
-Před spuštěním hry se ujistěte, že máte staženou knihovnu Pygame a že jste si zkopírovali celý adresář [Zapoctovy_program](Zapoctovy_program), ze kterého také hru [main.py](Zapoctovy_program/main.py) spouštíte. Důležité upozornění: adresáře s levely a jednotlivými skóre nejsou určeny pro přímou interakci s uživatelem!
+Před spuštěním hry se ujistěte, že máte staženou knihovnu Pygame a že jste si zkopírovali celý adresář [Zapoctovy_program](Zapoctovy_program), ze kterého také hru [main.py](Zapoctovy_program/main.py) spouštíte. Důležité upozornění: adresáře s levely, fontem a jednotlivými skóre nejsou určeny pro přímou interakci s uživatelem!
 
 #### Cíl hry
 Cílem hry je přemístit hráče (zelený čtvereček) validními tahy do cíle (červený čtvereček).
