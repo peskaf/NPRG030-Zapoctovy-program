@@ -7,7 +7,7 @@ Programování 1 [NPRG030]
 
 import pygame, os
 from pygame.locals import *
-import utils
+import utils #soubor vlastnich funkci ve stejnem adresari
 pygame.init()
 
 #Generovani bludiste_________________________________________________________________________________________________________________________Generovani bludiste_begin

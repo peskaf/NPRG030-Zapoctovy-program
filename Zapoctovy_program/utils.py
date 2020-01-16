@@ -36,7 +36,6 @@ def vyber_nahodne_zaklad(bludiste):
     poc_zakladu = 0
     poc_radku = 0
     index = random.randint(1,kolik_zakladu(bludiste))
-    #print(index)
     for radek in bludiste:
         poc_prvku = 0
         while poc_prvku !=21:
