@@ -90,7 +90,7 @@ Výsledek uloženého bludiště v textovém souboru (pro zadané číslo 4):
 ![Uložené bludiště](pics/level_txt.png)
 
 ## Instalace a požadavky
-Pro spuštění [main.py](Zapoctovy_program/main.py) je potřeba mít nainstalovanou knihovnu Pygame verze 1.9.6, pro spuštění [Level_generator.py](Zapoctovy_program/Level_generator.py) není třeba žádná nainstalovaná knihovna. Pro oba programy je naprosotu nutností přítomnot programu [utils.py](Zapoctovy_program/utils.py), ze kterého si oba programy importují funkce.
+Pro spuštění [main.py](Zapoctovy_program/main.py) je potřeba mít nainstalovanou knihovnu Pygame verze 1.9.6, pro spuštění [Level_generator.py](Zapoctovy_program/Level_generator.py) není třeba žádná nainstalovaná knihovna. Pro oba programy je naprosotu nutností přítomnost programu [utils.py](Zapoctovy_program/utils.py), ze kterého si oba programy importují funkce.
 
 ## Dokumentace
 
