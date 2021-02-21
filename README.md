@@ -1,4 +1,4 @@
-# Generování a procházení bludiště
+# Zápočtový program - Programování 1 - Generování a procházení bludiště
 
 Tento program v jazyce Python generuje bludiště, která následně umožní uživateli kompetitivní formou projít.
 
